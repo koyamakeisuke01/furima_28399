@@ -18,7 +18,6 @@
 - has_many :items
 - has many :comments
 - has many :orders
-- has_one :destination
 
 ## items テーブル
 
@@ -40,6 +39,7 @@
 - has_many :comments
 - belongs_to :user
 - has_one :order
+- has_one :destination
 
 ## comments テーブル
 
@@ -65,7 +65,6 @@
 
 - belongs_to :user
 - belongs_to :item
-- has_one :destination
 
 ## destinations テーブル
 
@@ -83,3 +82,4 @@
 
 - belongs_to :user
 - belongs_to :order
+- belongs_to :item
