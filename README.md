@@ -66,7 +66,7 @@
 
 | Column        | Type       | Options                        |
 | ------------- | ---------- | ------------------------------ |
-| zip_code      | integer    | null: false                    |
+| zip_code      | string     | null: false                    |
 | prefecture    | string     | null: false                    |
 | city          | string     | null: false                    |
 | address       | string     | null: false                    |
