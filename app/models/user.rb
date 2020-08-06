@@ -3,7 +3,8 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  
+
+  # バリデーション
   validates :nickname, :family_name, :first_name, 
             :family_name_kana, :first_name_kana, :birthday,
               presence: true
@@ -33,6 +34,10 @@ class User < ApplicationRecord
   validates :first_name_kana,
               format: { with: VALID_ZENKAKU_KANA_REGEX,
                         message: "Full-width katakana characters" }
+  # //バリデーション
 
+  # アソシエーション
+  has_many :items
+  # //アソシエーション
   
 end
