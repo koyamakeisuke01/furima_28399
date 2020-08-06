@@ -1,12 +1,13 @@
 class ItemsController < ApplicationController
-  def index
-  end
 
   def new
     # 未ログインユーザーはログインページへリダイレクト
     login_check
 
-    
+    @item = Item.new
+  end
+
+  def create
   end
 
   private
@@ -15,4 +16,5 @@ class ItemsController < ApplicationController
       redirect_to new_user_session_path
     end
   end
+
 end
