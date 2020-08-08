@@ -12,8 +12,8 @@ class ItemsController < ApplicationController
     
     # 必須項目を正常に入力している場合、DBに保存しトップページへ遷移
     if @item.valid?
-      # @item.save
       binding.pry
+      @item.save
       redirect_to root_path
     # 未記入の項目がある場合、エラーメッセージを表示
     else
@@ -30,7 +30,7 @@ class ItemsController < ApplicationController
   end
 
   def item_params
-    params.require(:item).permit(:image, :name, :description).merge(user_id: current_user.id)
+    params.require(:item).permit(:image, :name, :description, :category_id).merge(user_id: current_user.id)
   end
 
 end
