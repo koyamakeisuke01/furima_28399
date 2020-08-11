@@ -12,7 +12,6 @@ class ItemsController < ApplicationController
     
     # 必須項目を正常に入力している場合、DBに保存しトップページへ遷移
     if @item.valid?
-      # binding.pry
       @item.save
       redirect_to root_path
     # 未記入の項目がある場合、エラーメッセージを表示
