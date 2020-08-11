@@ -4,10 +4,10 @@ FactoryBot.define do
     description             {"未使用のクロスバイクです"}
     price                   {"300"}
     association             :user
-    category
-    status
-    shipping_charge
-    shipping_address
-    shipping_date
+    category_id             {2}
+    status_id               {2}
+    shipping_charge_id      {2}
+    shipping_address_id     {2}
+    shipping_date_id        {2}
   end
 end
