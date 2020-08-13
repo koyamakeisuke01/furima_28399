@@ -7,6 +7,7 @@ window.addEventListener('load', function(){
 
   price.addEventListener('change', function() {
     taxPrice.value = price.value * taxRate;
+    console.log(price.value)
     taxPrice.innerHTML = price.value * taxRate;
     profit.innerHTML = price.value - taxPrice.value;
   })

@@ -1,5 +1,9 @@
 class ItemsController < ApplicationController
 
+  def index
+    @items = Item.includes(:user).order("created_at DESC")
+  end
+
   def new
     # 未ログインユーザーはログインページへリダイレクト
     login_check
