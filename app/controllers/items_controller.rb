@@ -1,4 +1,5 @@
 class ItemsController < ApplicationController
+  before_action :set_item, only: [:show, :edit]
 
   def index
     @items = Item.includes(:user).order("created_at DESC")
@@ -25,7 +26,21 @@ class ItemsController < ApplicationController
   end
 
   def show
+  end
+
+  def edit
+  end
+
+  def update
     @item = Item.find(params[:id])
+
+    # 必須項目を正常に入力している場合、DBを更新トップページへ遷移
+    if @item.update(item_params)
+      redirect_to root_path
+    # 未記入の項目がある場合、エラーメッセージを表示
+    else
+      render :edit
+    end
   end
 
   private
@@ -37,6 +52,10 @@ class ItemsController < ApplicationController
 
   def item_params
     params.require(:item).permit(:image, :name, :description, :category_id, :status_id, :shipping_charge_id, :shipping_address_id, :shipping_date_id, :price).merge(user_id: current_user.id)
+  end
+
+  def set_item
+    @item = Item.find(params[:id])
   end
 
 end
