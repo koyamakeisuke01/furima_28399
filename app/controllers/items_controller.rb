@@ -29,9 +29,11 @@ class ItemsController < ApplicationController
   end
 
   def edit
+    # 出品者以外はトップページへリダイレクト
+    seller_check
   end
 
-  def update
+  def update    
     @item = Item.find(params[:id])
 
     # 必須項目を正常に入力している場合、DBを更新トップページへ遷移
@@ -47,6 +49,15 @@ class ItemsController < ApplicationController
   def login_check
     unless user_signed_in?
       redirect_to new_user_session_path
+    end
+  end
+
+  def seller_check
+    unless user_signed_in?
+      redirect_to root_path
+    end
+    if user_signed_in? && current_user.id != @item.user_id
+      redirect_to root_path
     end
   end
 
