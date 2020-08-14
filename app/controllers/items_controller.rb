@@ -1,14 +1,12 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit]
+  before_action :login_check, only: [:new, :edit]
 
   def index
     @items = Item.includes(:user).order("created_at DESC")
   end
 
   def new
-    # 未ログインユーザーはログインページへリダイレクト
-    login_check
-
     @item = Item.new
   end
 
@@ -53,9 +51,6 @@ class ItemsController < ApplicationController
   end
 
   def seller_check
-    unless user_signed_in?
-      redirect_to root_path
-    end
     if user_signed_in? && current_user.id != @item.user_id
       redirect_to root_path
     end
