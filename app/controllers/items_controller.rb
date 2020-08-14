@@ -1,5 +1,5 @@
 class ItemsController < ApplicationController
-  before_action :set_item, only: [:show, :edit]
+  before_action :set_item, only: [:show, :edit, :update]
   before_action :login_check, only: [:new, :edit]
 
   def index
@@ -31,9 +31,7 @@ class ItemsController < ApplicationController
     seller_check
   end
 
-  def update    
-    set_item
-
+  def update
     # 必須項目を正常に入力している場合、DBを更新トップページへ遷移
     if @item.update(item_params)
       redirect_to root_path
