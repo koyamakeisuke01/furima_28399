@@ -32,7 +32,7 @@ class ItemsController < ApplicationController
   end
 
   def update    
-    @item = Item.find(params[:id])
+    set_item
 
     # 必須項目を正常に入力している場合、DBを更新トップページへ遷移
     if @item.update(item_params)
