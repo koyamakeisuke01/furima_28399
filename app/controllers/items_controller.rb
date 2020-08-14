@@ -1,13 +1,12 @@
 class ItemsController < ApplicationController
+  before_action :set_item, only: [:show, :edit, :update]
+  before_action :login_check, only: [:new, :edit]
 
   def index
     @items = Item.includes(:user).order("created_at DESC")
   end
 
   def new
-    # 未ログインユーザーはログインページへリダイレクト
-    login_check
-
     @item = Item.new
   end
 
@@ -25,7 +24,21 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @item = Item.find(params[:id])
+  end
+
+  def edit
+    # 出品者以外はトップページへリダイレクト
+    seller_check
+  end
+
+  def update
+    # 必須項目を正常に入力している場合、DBを更新トップページへ遷移
+    if @item.update(item_params)
+      redirect_to root_path
+    # 未記入の項目がある場合、エラーメッセージを表示
+    else
+      render :edit
+    end
   end
 
   private
@@ -35,8 +48,18 @@ class ItemsController < ApplicationController
     end
   end
 
+  def seller_check
+    if user_signed_in? && current_user.id != @item.user_id
+      redirect_to root_path
+    end
+  end
+
   def item_params
     params.require(:item).permit(:image, :name, :description, :category_id, :status_id, :shipping_charge_id, :shipping_address_id, :shipping_date_id, :price).merge(user_id: current_user.id)
+  end
+
+  def set_item
+    @item = Item.find(params[:id])
   end
 
 end
