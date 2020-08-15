@@ -9,6 +9,7 @@ class Item < ApplicationRecord
   belongs_to_active_hash :shipping_charge
   belongs_to_active_hash :shipping_address
   belongs_to_active_hash :shipping_date
+  has_one :order
 
   # バリデーション
   with_options presence: true do
