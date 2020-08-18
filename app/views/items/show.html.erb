@@ -31,13 +31,17 @@
       <p class='or-text'>or</p>
       <%= link_to '削除', item_path(@item.id), method: :delete, class:'item-destroy' %>
     <% else %>
-      <%# 商品が売れていない場合のみ表示 %>
+      <%# 商品が売れていない場合のみ「購入画面に進む」ボタンを表示 %>
+      <% flag = "false" %>
       <% @transactions.each do |transaction| %>
-        <% if @item.id == transaction.item_id %>  
-        <% else %>
-          <%= link_to '購入画面に進む', item_transactions_path(@item.id) ,class:"item-red-btn"%>
+        <% if @item.id == transaction.item_id %>
+          <% flag = "true" %>
           <% break %>
         <% end %>
+      <% end %>
+      <% if flag == "true" %>
+      <% else %>
+        <%= link_to '購入画面に進む', item_transactions_path(@item.id) ,class:"item-red-btn"%>
       <% end %>
     <% end %>
 

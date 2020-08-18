@@ -3,6 +3,7 @@ class TransactionsController < ApplicationController
   def index
     login_check
     seller_check
+    purchased_check
   end
 
   def create    
@@ -30,13 +31,29 @@ class TransactionsController < ApplicationController
     end
   end
 
+  def purchased_check
+    @item = Item.find(params[:item_id])
+    @transactions = Transaction.all
+    flag = "false"
+
+    @transactions.each do |transaction|
+      if @item.id == transaction.item_id
+        flag = "true"
+        break
+      end
+    end
+    if flag == "true"
+      redirect_to root_path
+    end
+  end
+
   def transaction_params
     params.permit(:token, :zip_code, :shipping_address_id, :city, :address, :building_name, :phone_number, :item_id).merge(user_id: current_user.id)
   end
 
   def pay_item
     @item = Item.find(params[:item_id])
-    Payjp.api_key = "sk_test_f82bef18daaf141bd8040342"
+    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
     Payjp::Charge.create(
       amount: @item.price,
       card: transaction_params[:token],
